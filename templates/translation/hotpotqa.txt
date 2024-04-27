@@ -1,0 +1,24 @@
+### Instruction:
+Translate the following natural language (NL) question and contexts to a first-order logic (FOL) rule.
+Take the following NL to FOL as an example.
+# Example 1:
+### NL:
+## Context:
+If a person is a student, then he/she is a learner.
+If a person is a learner, then he/she is smart.
+## Question:
+Is it true that a student is smart?
+### FOL:
+## Context:
+- ∀x (student(x) → learner(x))
+- ∀x (learner(x) → smart(x))
+## Question:
+- student(x) → smart(x)
+
+Now, it's your turn to translate the following NL to FOL.
+### NL:
+## Context:
+{context}
+## Question:
+{question}
+### FOL
