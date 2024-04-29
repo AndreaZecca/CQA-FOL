@@ -1,0 +1,26 @@
+### Instruction:Translate the following natural language (NL) question and contexts to a first-order logic (FOL) rule.
+Take the following NL to FOL as an example.
+# Example 1:
+### NL:
+## Context:
+If a person is a student, then he/she is a learner.
+If a person is a learner, then he/she is smart.
+## Question:
+Is it true that a student is smart?
+### FOL:
+## Context:
+- \u2200x (student(x) \u2192 learner(x))
+- \u2200x (learner(x) \u2192 smart(x))
+## Question:
+- student(x) \u2192 smart(x)
+
+Now, it's your turn to translate the following NL to FOL.
+### NL:
+## Context:
+Allison Beth \"Allie\" Goertz (born March 2, 1991) is an American musician.
+Goertz is known for her satirical songs based on various pop culture topics.
+Her videos are posted on YouTube under the name of Cossbysweater.
+Milhouse Mussolini van Houten is a fictional character featured in the animated television series \"The Simpsons\", voiced by Pamela Hayden, and created by Matt Groening who named the character after President Richard Nixon's middle name.
+## Question:
+Musician and satirist Allie Goertz wrote a song about the \"The Simpsons\" character Milhouse, who Matt Groening named after who?
+### FOL
