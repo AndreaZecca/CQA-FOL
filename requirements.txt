@@ -1,0 +1,11 @@
+click
+datasets
+transformers
+peft @ git+https://github.com/huggingface/peft.git
+sentencepiece
+python-dotenv
+huggingface_hub
+protobuf
+accelerate
+bitsandbytes
+tqdm
