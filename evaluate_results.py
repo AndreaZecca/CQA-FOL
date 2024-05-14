@@ -4,10 +4,9 @@ import evaluate
 from tqdm import tqdm
 
 skip_files = [
-    'cqa_val.json',
-    'hqa_val.json',
-    'obqa_test.json',
-    'cqa20.json'
+    'train.json',
+    'validation.json',
+    'test.json'
 ]
 
 def eval_mcqa(data):
@@ -25,28 +24,36 @@ def eval_rouge(data):
     predictions = [item['model_answer'] for item in data][:3]
     references = [item['correct_answer'] for item in data][:3]
     scores = rouge.compute(predictions=predictions, references=references)
-    return round(scores['rougeLsum'], 2)
+    return scores
 
 def evaluate_results():
     results = {}
-    for result_filename in tqdm(sorted(os.listdir('outputs'))):
-        if not result_filename.endswith('.json') or result_filename in skip_files:
+    for dataset in tqdm(os.listdir('outputs')):
+        if dataset not in ['cqa', 'cqa20', 'hqa', 'obqa', 'snli']:
             continue
-        with open(f'outputs/{result_filename}', 'r') as f:
-            data = json.load(f)
-        if result_filename.split('_')[0] in ['cqa', 'obqa', 'cqa20']:
-            res = eval_mcqa(data)
-        elif result_filename.split('_')[0] in ['hqa']:
-            res = eval_rouge(data)
-        else:
-            print(f'Unknown dataset {result_filename.split("_")[0]}')
-            continue
-        results[result_filename] = res
-
-    print('Results:')
-    for result_filename, acc in results.items():
-        print(f'{result_filename}: {acc}')
-
+        results[dataset] = {}
+        for result_filename in os.listdir(f'outputs/{dataset}'):
+            if not result_filename.endswith('.json') or result_filename in skip_files:
+                continue
+            with open(f'outputs/{dataset}/{result_filename}', 'r', encoding='utf-8') as f:
+                data = json.load(f)
+            if dataset in ['hqa']:
+                res = eval_rouge(data)
+            elif dataset in ['cqa', 'cqa20', 'obqa', 'snli']:
+                res = eval_mcqa(data)
+            else:
+                print(f'Unknown dataset {result_filename.split("_")[0]}')
+                continue
+            results[dataset][result_filename.split('.json')[0]] = res
+    for dataset, results_dataset in results.items():
+        print(f'\nDataset: {dataset}')
+        for result_filename, result in results_dataset.items():
+            if isinstance(result, dict):
+                print(f'    {result_filename}:')
+                for metric, value in result.items():
+                    print(f'        {metric}: {value}')
+            else:
+                print(f'    {result_filename}: {result}')               
 
 if __name__ == '__main__':
     evaluate_results()

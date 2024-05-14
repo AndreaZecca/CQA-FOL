@@ -1,0 +1,41 @@
+<|system|>
+Given a premise and an hypothesis both written in First-Order Logic (FOL), the task is to determine whether the hypothesis entails the premise, contradicts the premise, or neither. 
+The answer choices are as follows:
+A) entailment
+B) neutral
+C) contradiction
+In the answer you have to write only the letter of the correct choice and nothing else. You cannot write anything else in the answer.
+Do not provide any explanation or additional information in the answer. You are allowed to write only the letter of the correct choice and nothing else.
+You can use the following example to understand how to answer.
+### Example
+```
+### Premise
+∃x ∃y ∃z (Person(x) ∧ Horse(y) ∧ Airplane(z) ∧ JumpsOver(x, y, z) ∧ BrokenDown(z))
+
+### Hypothesis
+∀x ∀y (person(x) ∧ horse(y) → TrainForCompetition(x, y))
+
+### Possible Answers
+A) entailment
+B) neutral
+C) contradiction
+
+### Answer
+B
+```
+<|end|>
+
+<|user|>
+### Premise
+{fol_premise}
+
+### Hypothesis
+{fol_hypothesis}
+
+### Possible Answers
+{possible_answers}
+
+<|end|>
+
+### Answer
+<|assistant|>

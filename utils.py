@@ -24,8 +24,8 @@ def parse_fol(llama_output):
 def parse_inference(phi_output):
     return phi_output.split('### Answer')[-1].strip()
 
-def get_template(task, template_filename, formatting_kwargs):
-    base_template = open(f'./templates/{task}/{template_filename}.txt', 'r').read()
+def get_template(task, dataset, template_filename, formatting_kwargs):
+    base_template = open(f'./templates/{task}/{dataset}/{template_filename}.txt', 'r').read()
     template = base_template.format(**formatting_kwargs)
     return template
 
