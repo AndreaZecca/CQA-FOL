@@ -12,8 +12,10 @@ login(token=os.getenv('HF_TOKEN'))
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
-translation_base_model = 'meta-llama/Llama-2-7b-chat-hf'
-translation_peft_model = 'yuan-yang/LogicLLaMA-7b-direct-translate-delta-v0.1'
+# translation_base_model = 'meta-llama/Llama-2-7b-chat-hf'
+# translation_peft_model = 'yuan-yang/LogicLLaMA-7b-direct-translate-delta-v0.1'
+
+logicllama_model = 'LorMolf/LogicLlama2-chat-direct'
 
 inference_base_model = 'microsoft/Phi-3-mini-128k-instruct'
 
@@ -30,12 +32,12 @@ def get_template(task, dataset, template_filename, formatting_kwargs):
     return template
 
 def load_vllm_translation_model():
-    model = LLM('LorMolf/LogicLlama2-chat-direct', dtype='auto')
+    model = LLM(logicllama_model, dtype='auto')
     return model
 
-# def load_vllm_inference_model():
-#     model = LLM(inference_base_model, dtype='auto', trust_remote_code=True)
-#     return model
+def load_vllm_inference_model():
+    model = LLM(inference_base_model, trust_remote_code=True, dtype=torch.float16, max_model_len=7424)
+    return model
     
 def query_vllm_model(model, input_prompts, max_tokens=128):
     sampling_params = SamplingParams(temperature=0.8, top_p=0.95, max_tokens=max_tokens, n=1)
